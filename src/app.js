@@ -10,9 +10,21 @@ app.get("/restaurants/:id", async (req, res) => {
 })
 
 app.use(express.json());
-app.post("/restaurants", (req, res) => {
-    
+app.use(express/express.urlencoded())
+app.post("/restaurants", async (req, res) => {
+    await Restaurant.create(req.body)
+    const restaurants = await Restaurant.findAll()
+    res.json(restaurants);
 })
-
-
+app.put("/restaurants/:id", async (req, res) =>{
+    const found = await Restaurant.findByPk(req.params.id)
+    await found.update(req.body)
+    const restaurants = await Restaurant.findAll();
+    res.json(restaurants)
+})
+app.delete("/restaurants/:id", async (req, res) =>{
+    const found = await Restaurant.findByPk(req.params.id)
+    const deleted = await found.destroy()
+    res.json(deleted)
+})
 module.exports = app;
